@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 /**
  * AppModule - Hilt dependency injection module
- * 
+ *
  * Provides singleton instances of:
  * - ApiService for network calls
  * - MessageRepository for data access
@@ -19,22 +19,24 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-  
-  /**
-   * Provide ApiService instance (singleton)
-   */
-  @Provides
-  @Singleton
-  fun provideApiService(): ApiService {
-    return RetrofitClient.apiService
-  }
-  
-  /**
-   * Provide MessageRepository instance (singleton)
-   */
-  @Provides
-  @Singleton
-  fun provideMessageRepository(): MessageRepository {
-    return MessageRepository()
-  }
+
+    /**
+     * Provide ApiService instance (singleton)
+     */
+    @Provides
+    @Singleton
+    fun provideApiService(): ApiService {
+        return RetrofitClient.apiService
+    }
+
+    /**
+     * Provide MessageRepository instance (singleton)
+     * 
+     * The ApiService is injected as a dependency for repository access
+     */
+    @Provides
+    @Singleton
+    fun provideMessageRepository(apiService: ApiService): MessageRepository {
+        return MessageRepository(apiService)
+    }
 }
