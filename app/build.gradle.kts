@@ -67,3 +67,23 @@ dependencies {
     // Testing
     testImplementation("junit:junit:4.13.2")
 }
+
+
+// Serialization
+implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
+// Navigation Compose
+implementation("androidx.navigation:navigation-compose:2.7.0")
+
+// Accompanist (utilities for Compose)
+implementation("com.google.accompanist:accompanist-permissions:0.32.0")
+implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
+
+// Logging
+implementation("com.jakewharton.timber:timber:5.0.1")
+
+// Datastore for preferences
+implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+// Debug tools
+debuggingImplementation("androidx.compose.ui:ui-tooling:1.5.0")
