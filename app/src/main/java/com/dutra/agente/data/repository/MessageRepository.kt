@@ -8,6 +8,7 @@ import com.dutra.agente.utils.Result
 import timber.log.Timber
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 /**
  * MessageRepository - Gerencia mensagens com cache em memoria e sincronizacao com backend
@@ -19,7 +20,7 @@ import kotlinx.coroutines.withContext
  * - Operacoes assincronas com Coroutines
  * - Persistencia futura via Room Database (proximo passo)
  */
-class MessageRepository(
+class MessageRepository @Inject constructor(
     private val apiService: ApiService
 ) {
     // Cache em memoria

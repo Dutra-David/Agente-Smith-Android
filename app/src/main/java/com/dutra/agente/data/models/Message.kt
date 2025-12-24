@@ -4,12 +4,6 @@ import kotlinx.serialization.Serializable
 
 /**
  * Message - Data model for chat messages
- * 
- * @param id Unique identifier for the message
- * @param content The message text content
- * @param isFromUser Whether the message is from the user (true) or agent (false)
- * @param timestamp Milliseconds since epoch when message was sent
- * @param metadata Additional metadata about the message (optional)
  */
 @Serializable
 data class Message(

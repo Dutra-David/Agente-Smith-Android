@@ -77,7 +77,9 @@ class ChatViewModel @Inject constructor(
      */
     fun sendMessage(text: String) {
         if (text.isBlank()) {
-            _errorMessage.emit("Mensagem nao pode estar vazia")
+            viewModelScope.launch {
+                _errorMessage.emit("Mensagem nao pode estar vazia")
+            }
             return
         }
 

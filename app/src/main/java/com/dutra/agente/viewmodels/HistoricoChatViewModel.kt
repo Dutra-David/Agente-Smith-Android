@@ -5,13 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dutra.agente.dados.banco.entidades.HistoricoChat
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel para gerenciar histórico de chat
  * Responsabilidades: Gerenciar conversas, estado emocional, métricas de satisfação
  */
-class HistoricoChatViewModel : ViewModel() {
+@HiltViewModel
+class HistoricoChatViewModel @Inject constructor() : ViewModel() {
     
     // LiveData para lista de mensagens
     private val _chatHistory = MutableLiveData<List<HistoricoChat>>(emptyList())

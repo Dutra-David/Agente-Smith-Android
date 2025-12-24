@@ -5,13 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dutra.agente.dados.banco.entidades.HistoricoInteracao
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel para gerenciar histórico de interações
  * Responsabilidades: Métricas comportamentais, engajamento, impacto psicológico
  */
-class HistoricoInteracaoViewModel : ViewModel() {
+@HiltViewModel
+class HistoricoInteracaoViewModel @Inject constructor() : ViewModel() {
     
     private val _interacoes = MutableLiveData<List<HistoricoInteracao>>(emptyList())
     val interacoes: LiveData<List<HistoricoInteracao>> = _interacoes

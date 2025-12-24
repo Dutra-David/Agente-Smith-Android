@@ -5,13 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dutra.agente.dados.banco.entidades.UsuarioPerfil
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel para gerenciar estado de Perfil do Usuário
  * Responsabilidades: Gerenciar estado da UI, expor dados via LiveData, operações assíncronas
  */
-class UsuarioPerfilViewModel : ViewModel() {
+@HiltViewModel
+class UsuarioPerfilViewModel @Inject constructor() : ViewModel() {
     
     // LiveData para perfil do usuário
     private val _usuarioPerfil = MutableLiveData<UsuarioPerfil?>()
