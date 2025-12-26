@@ -17,8 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.dutra.agente.ui.screens.ChatScreen
 import com.dutra.agente.ui.theme.AgenteSmiththeme
+import com.dutra.agente.presentation.viewmodel.ChatViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
@@ -39,21 +41,26 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun InitializationScreen() {
+fun InitializationScreen(
+    viewModel: ChatViewModel = hiltViewModel()
+) {
     var isInitialized by remember { mutableStateOf(false) }
     var initError by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
         try {
             Log.d("InitScreen", "Iniciando carregamento da aplicação...")
-            // Simular inicialização com timeout de segurança
+            
+            // Pequeno delay para renderizar a tela
             delay(500)
             
-            // Aqui você pode adicionar inicializações necessárias
-            // Por exemplo: carregar dados do banco de dados, conectar à API, etc.
-            // Usando try-catch para evitar travamentos
+            // AGORA chamamos createSession após UI estar pronta
+            // Não no init do ViewModel!
+            viewModel.createSession()
             
-            delay(500)
+            Log.d("InitScreen", "Aguardando inicialização da sessão...")
+            delay(1000)
+            
             isInitialized = true
             Log.d("InitScreen", "Aplicação inicializada com sucesso")
         } catch (e: Exception) {
@@ -73,7 +80,7 @@ fun InitializationScreen() {
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                ChatScreen()
+                ChatScreen(viewModel)
             }
         }
     } else {
