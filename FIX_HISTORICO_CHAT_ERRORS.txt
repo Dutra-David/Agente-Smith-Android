@@ -1,0 +1,117 @@
+========================================
+FIX: HISTORICO_CHAT.kt - Erros de Compilacao
+========================================
+
+ERROS ENCONTRADOS:
+1. Only 'const val' can be used in constant expressions (linhas 14, 15)
+2. Annotation argument must be a compile-time constant (linha 16)
+3. Unresolved reference 'UsuarioPerfil' (linha 16)
+4. Package directive does not match the file location (linha 1)
+
+========================================
+SOLUCAO
+========================================
+
+ERRO 1 e 2: const val em Table name
+=======================================
+PROBLEMA:
+Linhas 14-15 usam 'var' quando deveriam usar 'const val'
+Annotations no Room exigem compile-time constants
+
+FIX:
+Mude estas linhas:
+```kotlin
+var tableName = "historico_chat"    // ERRADO
+var columnId = "id"                  // ERRADO
+```
+
+Para isto:
+```kotlin
+const val TABLE_NAME = "historico_chat"
+const val COLUMN_ID = "id"
+```
+
+Depois atualize a annotation:
+```kotlin
+@Entity(tableName = TABLE_NAME)  // Correto
+```
+
+========================================
+ERRO 3: Unresolved reference 'UsuarioPerfil'
+=======================================
+PROBLEMA:
+A classe UsuarioPerfil nao existe ou nao foi importada
+
+OPCAO 1: Se a classe deve existir:
+```kotlin
+import com.dutra.agente.data.banco.entidades.UsuarioPerfil
+```
+
+OPCAO 2: Se nao precisa da referencia:
+Delete ou comente a linha que usa 'UsuarioPerfil'
+
+OPCAO 3: Se precisa, crie a classe:
+Arquivo: app/src/main/java/com/dutra/agente/data/banco/entidades/UsuarioPerfil.kt
+
+========================================
+ERRO 4: Package directive does not match
+=======================================
+PROBLEMA:
+A declaracao 'package' na linha 1 nao corresponde ao caminho do arquivo
+
+ARQUIVO: HistoricoChat.kt
+CAMINHO: app/src/main/java/com/dutra/agente/data/banco/entidades/
+
+DEVE SER:
+```kotlin
+package com.dutra.agente.data.banco.entidades
+```
+
+NAO:
+```kotlin
+package com.dutra.agente.data.banco  // ERRADO
+```
+
+========================================
+CHECKLIST FIX
+========================================
+
+[ ] Mudou 'var' para 'const val' nas linhas 14-15
+[ ] Atualizou @Entity(tableName = TABLE_NAME)
+[ ] Resolveu o erro de UsuarioPerfil (import ou delete)
+[ ] Corrigiu o package directive na linha 1
+[ ] Salvou o arquivo
+[ ] Executou: ./gradlew clean && ./gradlew build
+[ ] Build passou 100%
+
+========================================
+EXEMPLO CORRETO: HistoricoChat.kt
+========================================
+
+package com.dutra.agente.data.banco.entidades
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.dutra.agente.data.banco.entidades.UsuarioPerfil  // Se precisar
+
+@Entity(tableName = "historico_chat")
+data class HistoricoChat(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val usuarioId: Int,
+    val mensagem: String,
+    val dataHora: String,
+    val tipoEmocao: String?
+)
+
+========================================
+DICA: Se tiver muitos erros
+========================================
+
+1. Verifique se o arquivo esta no lugar certo
+2. Valide o package name
+3. Cheque todas as importacoes
+4. Use: Code -> Run Inspection by Name -> Analyze Code
+5. Ou: ./gradlew build --info para debug
+
+========================================
