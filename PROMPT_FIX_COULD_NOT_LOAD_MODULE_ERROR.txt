@@ -1,0 +1,110 @@
+==========================================
+PROMPT FIX: Could not load module <Error module>
+Android Studio - Agente-Smith-Android
+==========================================
+
+ERRO: e: Could not load module <Error module>
+COMPILATION ERROR - See log for more details
+
+CAUSA PRINCIPAL:
+Android Studio nao conseguiu carregar ou achar:
+- Uma classe referenciada que nao existe
+- Um import incorreto/faltando
+- Uma dependencia nao resolvida
+- Um modulo que foi deletado mas referencia ainda existe
+
+SOLUCAO 1: DESABILITAR KAPT TEMPORARIAMENTE (RECOMENDADO)
+=====================================================
+
+ESTE METODO EXPOE O ERRO REAL ESCONDIDO!
+
+Passo 1: Abra o arquivo `build.gradle.kts` (raiz do projeto)
+
+Passo 2: ADICIONE este codigo no final:
+
+```kotlin
+allprojects {
+    tasks.matching { it.name.contains("kapt") }.configureEach {
+        enabled = false
+    }
+}
+```
+
+Passo 3: Execute no terminal:
+   ./gradlew clean
+   ./gradlew build
+
+Passo 4: AGORA voce vera o ERRO REAL!
+(Procure por linhas em vermelho no output)
+
+Passo 5: FIX O ERRO:
+- Se error for: "cannot find symbol" - procure class/import errado
+- Se error for: "unresolved reference" - adicione dependencia
+- Se error for: "missing class" - delete referencia ou adicione classe
+
+Passo 6: REMOVA o codigo que adicionou (desabilitar kapt)
+
+Passo 7: Rebuild:
+   ./gradlew clean
+   ./gradlew build
+
+==========================================
+SOLUCAO 2: ANALISAR CODIGO AUTOMATICAMENTE
+==========================================
+
+Menu: Code -> Run Inspection by Name -> "Analyze Code"
+
+ISSO vai encontrar:
+- Imports nao usados
+- Classes nao encontradas
+- Referencias quebradas
+
+==========================================
+SOLUCAO 3: VERIFICAR IMPORTS E CLASSES
+==========================================
+
+1. Procure em TODOS os arquivos .kt por:
+   - "import" statements vermelho (erro)
+   - Classes referenciadas que nao existem
+   - Paths de modulos incorretos
+
+2. Ferramentas:
+   - Ctrl+Shift+F (Find in Files)
+   - Procure por nomes de classes que foram deletadas
+
+3. Caso nao encontre:
+   - Limpe o cache:
+     rm -rf .gradle
+     rm -rf app/.gradle
+     rm -rf build
+     ./gradlew clean
+   - Invalide cache Android Studio:
+     File -> Invalidate Caches -> Restart
+
+==========================================
+SOLUCAO 4: CHECKLIST FINAL
+==========================================
+
+[ ] Desabilitou KAPT temporariamente
+[ ] Executou "./gradlew build" com KAPT desabilitado
+[ ] Viu o erro real na saida
+[ ] Corrigiu o import/classe/dependencia
+[ ] Removeu o codigo de desabilitar KAPT
+[ ] Ran "./gradlew clean && ./gradlew build" com sucesso
+[ ] Build passou 100%
+
+==========================================
+DICA OURO: Debug Output
+==========================================
+
+Para ver mais detalhes:
+./gradlew build --stacktrace
+./gradlew build --debug
+./gradlew build --info
+
+ISSO vai mostrar:
+- Qual arquivo/classe exatamente esta com problema
+- Linha exata do codigo
+- O import/referencia errada
+
+==========================================
