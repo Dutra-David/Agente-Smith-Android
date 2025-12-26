@@ -1,5 +1,4 @@
-package com.dutra.agente.dados.banco.entidades
-
+package com.dutra.agente.data.banco.entidades
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
