@@ -1,0 +1,49 @@
+========================================
+PROMPT PARA AGENTE IA - FIX KAPT ERROR
+Android Studio - Agente-Smith-Android
+========================================
+
+TASK: Resolver o erro 'Execution failed for task kaptGenerateStubsDebugKotlin'
+
+ERRO ESPECIFICO:
+- compileDebugJavaWithJavac task usa Java 1.8
+- kaptGenerateStubsDebugKotlin task usa Java 17
+- SOLUCAO: Alinhar ambas para Java 11
+
+PASSOS EXATOS:
+
+1. Abra o arquivo: app/build.gradle.kts
+
+2. Localize o bloco: android { ... }
+
+3. Dentro de android {}, ADICIONE estas 2 secoes:
+
+   compileOptions {
+       sourceCompatibility = JavaVersion.VERSION_11
+       targetCompatibility = JavaVersion.VERSION_11
+   }
+   
+   kotlinOptions {
+       jvmTarget = "11"
+   }
+
+4. SALVE o arquivo
+
+5. Execute no terminal:
+   ./gradlew clean
+   ./gradlew build
+
+6. Se funcionar: SUCESSO!
+   Se nao funcionar: Tente Java 1.8 em vez de 11
+
+ALTERNATIVAS SE JAVA 11 FALHAR:
+
+   compileOptions {
+       sourceCompatibility = JavaVersion.VERSION_1_8
+       targetCompatibility = JavaVersion.VERSION_1_8
+   }
+   kotlinOptions {
+       jvmTarget = "1.8"
+   }
+
+FIM DO PROMPT
