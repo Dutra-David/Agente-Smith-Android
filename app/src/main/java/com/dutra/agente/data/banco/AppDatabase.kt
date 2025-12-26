@@ -1,5 +1,4 @@
-package com.dutra.agente.dados.banco
-
+package com.dutra.agente.data.banco
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -11,6 +10,7 @@ import com.dutra.agente.dados.banco.daos.UsuarioPerfilDao
 import com.dutra.agente.dados.banco.entidades.HistoricoChat
 import com.dutra.agente.dados.banco.entidades.HistoricoInteracao
 import com.dutra.agente.dados.banco.entidades.UsuarioPerfil
+import com.dutra.agente.data.banco.Converters
 
 /**
  * AppDatabase - Room Database Configuration
@@ -25,6 +25,7 @@ import com.dutra.agente.dados.banco.entidades.UsuarioPerfil
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     
     abstract fun usuarioPerfilDao(): UsuarioPerfilDao
